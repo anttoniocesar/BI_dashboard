@@ -14,7 +14,7 @@ dist/
 downloads/
 eggs/
 .eggs/
-lib/
+# lib/ - Pasta utilizada pelo projeto Next.js
 lib64/
 parts/
 sdist/
@@ -151,6 +151,10 @@ activemq-data/
 
 # Environments
 .env
+.env.local
+.env.*.local
+.env.*
+!.env.example
 .envrc
 .venv
 env/
@@ -204,6 +208,19 @@ cython_debug/
 # .vscode/
 # Temporary file for partial code execution
 tempCodeRunnerFile.py
+
+# Next.js / Node / local tooling
+node_modules/
+.next/
+out/
+.tools/
+*.tsbuildinfo
+test-results/
+playwright-report/
+.backups/
+.vercel/
+!lib/
+!lib/**
 
 # Ruff stuff:
 .ruff_cache/

@@ -1,0 +1,18 @@
+.journey-summit-flag { display:block; pointer-events:none; }
+.summit-flag-cloth {
+  transform-box:view-box;
+  transform-origin:5px 9px;
+  animation:journey-summit-flag-wave 3.2s ease-in-out infinite;
+}
+/* Only X scale and Y skew: the complete attachment edge at x=5 stays fixed.
+ * Neither the SVG viewport, mast, TOP container nor its label is animated. */
+@keyframes journey-summit-flag-wave {
+  0%,100% { transform:skewY(.2deg) scaleX(1); }
+  19% { transform:skewY(-2deg) scaleX(.975); }
+  47% { transform:skewY(2.6deg) scaleX(1.025); }
+  73% { transform:skewY(-.8deg) scaleX(.99); }
+  88% { transform:skewY(1.2deg) scaleX(1.012); }
+}
+@media(prefers-reduced-motion:reduce) {
+  .summit-flag-cloth { animation:none; transform:none; }
+}

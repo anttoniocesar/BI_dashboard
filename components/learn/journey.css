@@ -1,0 +1,43 @@
+.course-journey-board { border:1px solid #c9d6e3; border-radius:7px; overflow:hidden; background:white; }
+.course-board-heading { display:flex; justify-content:space-between; align-items:center; padding:13px 18px; gap:14px; border-bottom:1px solid #dce5ed; }
+.course-board-heading > div > span { color:#52647a; font-size:9px; letter-spacing:1.5px; }
+.course-board-heading h2,.learn-main .course-board-heading h2 { font-size:17px; margin:3px 0 0; }
+.course-board-heading > p { font-size:11px; color:#52647a; margin:0; }
+.trail-map .journey-checkpoint { display:grid; place-items:center; border-radius:50%; background:#52647a; color:white; font-weight:700; box-shadow:0 3px 10px #142d4e80; flex-shrink:0; }
+.trail-map li[data-status="Atual"] .journey-checkpoint { background:#b55418; outline:2px solid #ee7e32; outline-offset:2px; }
+.trail-map li[data-status="Concluído"] .journey-checkpoint { background:#286944; }
+.trail-map li[data-status="Atual"] .journey-chapter-card { border-color:#a64b16; }
+.trail-map .learn-locked { background:transparent; }
+.trail-map a:focus-visible { outline:2px solid #a64b16; outline-offset:4px; }
+.trail-map .journey-empty { position:absolute; inset:0; display:grid; place-content:center; text-align:center; padding:20px; }
+.trail-map .journey-destination svg { display:block; }
+.trail-scroll { overflow-x:auto; max-width:100%; }
+.trail-map.journey-landscape.trail-dense { min-width:1800px; }
+.trail-map.journey-landscape,.trail-editor-map { position:relative; isolation:isolate; aspect-ratio:1942/809; height:auto; min-height:0; min-width:1100px; padding:0; background-size:100% 100%; background-position:center; background-repeat:no-repeat; }
+.trail-map.journey-landscape ol { position:absolute; inset:0; display:block; padding:0; margin:0; list-style:none; z-index:2; }
+.trail-map.journey-landscape li { position:absolute; width:auto; max-width:none; transform:translate(-50%,-50%); }
+.trail-map.journey-landscape li > :is(a,div,button) { position:relative; display:flex; align-items:center; flex-direction:column; text-decoration:none; border-radius:6px; }
+.trail-map .trail-preview-chapter { appearance:none; background:none; padding:0; border:0; cursor:pointer; font:inherit; }
+.trail-map.journey-landscape .journey-checkpoint { width:34px; height:34px; font-size:12px; border:2px solid white; }
+.trail-map.journey-landscape .journey-chapter-card { position:absolute; top:100%; width:max-content; max-width:135px; margin:4px 0 0; padding:4px 7px; background:#fffffff5; border:1px solid #b5c5d6; border-radius:5px; color:#142d4e; box-shadow:0 2px 6px #142d4e30; }
+.trail-map.journey-landscape .journey-chapter-card h3 { font-size:11px; line-height:1.2; margin:0; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden; }
+.trail-map.journey-landscape.trail-dense .journey-chapter-card { max-width:88px; }
+.trail-map.journey-landscape.trail-dense .journey-chapter-card.trail-label-right { transform:translateX(25%); }
+.trail-map.journey-landscape .journey-chapter-card.trail-label-above { top:auto; bottom:100%; margin:0 0 4px; transform:translateX(-50%); }
+.trail-lock { position:absolute; right:-5px; top:-6px; font-size:10px; }
+.trail-map .journey-path { display:block; position:absolute; inset:0; width:100%; height:100%; z-index:1; pointer-events:none; }
+.trail-map .journey-destination { position:absolute; right:auto; padding:0; border:0; background:none; transform:translate(-4px,-26px); z-index:3; display:flex; align-items:center; gap:5px; }
+.trail-destination-title { background:#fffffff0; padding:3px 6px; border-radius:4px; font-size:10px; color:#142d4e; }
+.trail-map.trail-fallback { min-width:0; aspect-ratio:auto; padding:70px 18px 18px; }
+.trail-map.trail-fallback ol { position:relative; display:grid; gap:20px; }
+.trail-map.trail-fallback li { position:relative; left:auto; top:auto; transform:none; }
+.trail-map.trail-fallback .journey-chapter-card { position:static; }
+.trail-editor-map { min-width:1000px; background-image:url('/images/learn/course-journey-background.png'); }
+.trail-guide { position:absolute; transform:translate(-50%,-50%); width:38px; height:38px; border:2px solid white; border-radius:50%; background:#eef3f9; color:#142d4e; font-size:12px; cursor:pointer; }
+.trail-guide[data-occupied=true] { background:#142d4e; color:white; }
+.trail-guide[aria-pressed=true] { outline:3px solid #ee7e32; outline-offset:3px; }
+.trail-guide:focus-visible { outline:3px solid #ee7e32; outline-offset:4px; }
+.trail-guide-top { position:absolute; transform:translate(-50%,-100%); color:#142d4e; background:white; padding:3px 8px; border-radius:4px; }
+.trail-editor-controls { display:flex; align-items:end; flex-wrap:wrap; gap:16px; margin:16px 0; }
+.trail-editor-controls label { display:grid; gap:6px; }
+.trail-editor-assignments { display:flex; flex-wrap:wrap; gap:8px 24px; padding:12px 20px; }

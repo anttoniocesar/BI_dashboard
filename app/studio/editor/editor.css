@@ -1,0 +1,29 @@
+.studio-editor-shell { max-width: 1600px; margin: auto; padding: 24px; color: #142d4e; }
+.studio-editor-header { display: flex; justify-content: space-between; align-items: center; gap: 24px; padding: 18px 0; }
+.studio-editor-header h1 { font-size: 24px; margin: 12px 0; overflow-wrap: anywhere; }
+.studio-editor-header .studio-professor-label { color: #52647a; }
+.studio-editor-header nav { display: flex; flex-wrap: wrap; gap: 10px; }
+.studio-editor-help { font-size: 13px; color: #52647a; margin-bottom: 18px; }
+.studio-editor-columns { display: grid; grid-template-columns: minmax(0, 1fr) 300px; gap: 20px; align-items: start; }
+.studio-editor-columns > * { min-width: 0; }
+.studio-cell-config { background: white; padding: 20px; border: 1px solid #cad4e0; border-radius: 8px; }
+.studio-cell-config h2 { font-size: 18px; margin: 0 0 14px; }
+.studio-cell-config h3 { font-size: 15px; }
+.studio-cell-config p, .studio-cell-config label { font-size: 13px; line-height: 1.5; }
+.studio-cell-config fieldset { border: 1px solid #cad4e0; padding: 12px; margin: 16px 0; }
+.studio-cell-config label { display: block; margin-bottom: 12px; }
+.studio-cell-config input:not([type=radio]):not([type=checkbox]), .studio-cell-config select, .studio-cell-config textarea { display: block; width: 100%; padding: 8px; margin-top: 5px; border: 1px solid #687d95; border-radius: 4px; color: #142d4e; background: white; font: inherit; }
+.studio-cell-config .studio-check { display: flex; align-items: center; gap: 8px; }
+.studio-cell-config small { display: block; color: #52647a; font-size: 12px; margin: 8px 0; }
+.studio-validation-config { border-top: 1px solid #cad4e0; margin-top: 20px; padding-top: 16px; }
+.studio-editor-shell :is(button,a,input,select,textarea):focus-visible { outline: 2px solid #142d4e; outline-offset: 3px; }
+.author-spreadsheet .cell-answer { background: #ffe4ce; }
+.author-spreadsheet .cell-editable { background: #fff5cf; }
+.author-spreadsheet .cell-provided { background: #edf3fa; }
+.author-spreadsheet .cell-calculated { background: #edf0f4; }
+.author-spreadsheet .legend-calculated { background: #edf0f4; }
+.author-spreadsheet .legend-author-answer { background: #ffe4ce; }
+.author-spreadsheet .cell-legend { flex-wrap: wrap; }
+.author-spreadsheet .grid-viewport { height: 520px; }
+.studio-editor-shell [role=alert] { color: #9d2121; }
+@media (max-width: 1100px) { .studio-editor-shell { padding: 16px; } .studio-editor-columns { grid-template-columns: minmax(0, 1fr) 270px; gap: 12px; } .studio-editor-header { align-items: start; flex-direction: column; gap: 10px; } }

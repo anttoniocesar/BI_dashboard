@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 18" fill="#203149">
+  <g id="wing-left"><path d="M16 10C11 6 7 3 1 5C7 5 11 11 16 12Z"/></g>
+  <g id="wing-right"><path d="M16 10C21 4 27 2 31 4C25 4 20 10 16 12Z"/></g>
+  <g id="body"><path d="M14.8 8.8Q16 7.4 17.1 8.8L17.5 12.5 19 15 16 13.5 13.5 15 14.7 11.8Z"/></g>
+</svg>

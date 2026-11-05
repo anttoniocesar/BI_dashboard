@@ -1,0 +1,42 @@
+import { test, expect } from "./fixtures/authenticated-test";
+for (const width of [1440, 390]) test(`Jornada autoria: clique, select, teclado, persistência e preview ${width}`, async ({ page }) => {
+  await page.setViewportSize({ width, height: 1000 });
+  await page.goto("/studio/courses");
+  await page.getByRole("link", { name: "Novo curso", exact: true }).click();
+  await page.getByLabel("Título do curso", { exact: true }).fill("Jornada configurável");
+  await page.getByRole("button", { name: "Criar curso", exact: true }).click();
+  for (const title of ["Fundamentos", "Correção de Erro", "Aplicação Industrial"]) {
+    await page.getByLabel("Título do novo capítulo", { exact: true }).fill(title);
+    await page.getByRole("button", { name: "Criar capítulo", exact: true }).click();
+    await expect(page.getByRole("heading", { name: title, exact: true })).toBeVisible();
+  }
+  const editor = page.getByRole("region", { name: "Configurar jornada", exact: true });
+  await expect(editor.getByRole("alert")).toContainText("Defina a posição");
+  await editor.getByRole("button", { name: "Distribuir automaticamente", exact: true }).click();
+  await expect(editor.locator(".trail-guide")).toHaveCount(15);
+  await expect(editor.getByLabel("Ponto da jornada").locator('option[value="TOP"]')).toHaveCount(0);
+  await expect(editor.getByLabel("Ponto da jornada")).toHaveValue("P1");
+  await expect(editor.getByLabel("Ponto da jornada").locator('option[value="P5"]')).toHaveAttribute("disabled", "");
+  await editor.getByLabel("Capítulo da jornada").selectOption({ label: "2. Correção de Erro" });
+  const p6 = editor.getByRole("button", { name: "Selecionar ponto P6 · disponível", exact: true });
+  await p6.focus(); await page.keyboard.press("Enter");
+  await expect(editor.getByLabel("Ponto da jornada")).toHaveValue("P6");
+  await editor.getByLabel("Ponto da jornada").selectOption("P7");
+  await expect(editor.locator(".trail-editor-assignments")).toContainText("Correção de Erro → P7");
+  await editor.getByRole("button", { name: "Selecionar ponto P1 · ocupado por Fundamentos", exact: true }).click();
+  await expect(editor.getByRole("alert")).toContainText("Ponto ocupado");
+  await editor.getByLabel("Ponto da jornada").selectOption("P6");
+  await page.reload();
+  await expect(editor.locator(".trail-editor-assignments")).toContainText("Correção de Erro → P6");
+  await editor.screenshot({ path: `test-results/journey-teacher-${width}.png` });
+  await page.getByRole("link", { name: "Visualizar como aluno", exact: true }).click();
+  const preview = page.locator(".course-journey-board");
+  await expect(preview.locator(".journey-checkpoint")).toHaveCount(3);
+  await expect(preview.locator(".trail-guide")).toHaveCount(0);
+  await expect(preview.locator(".journey-chapter-card")).toHaveText(["Fundamentos", "Correção de Erro", "Aplicação Industrial"]);
+  await expect(preview.locator(".journey-path path").last()).toHaveAttribute("d", /72.4 9.5$/);
+  await preview.getByRole("button").first().click();
+  await expect(page).toHaveURL(/\/preview$/);
+  expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
+  await preview.screenshot({ path: `test-results/journey-preview-${width}.png` });
+});

@@ -1,0 +1,59 @@
+/* Same level as clouds; DOM order places birds above them, below path (1), chapters (2), TOP (3). */
+.journey-bird-layer {
+  position:absolute;
+  left:0;
+  top:0;
+  z-index:0;
+  overflow:hidden;
+  contain:paint;
+  pointer-events:none;
+  user-select:none;
+  --bird-size:18px;
+  --bird-flock-width:120px;
+  --bird-flock-height:48px;
+}
+.journey-bird-flight {
+  position:absolute;
+  inset:0;
+  opacity:0;
+  visibility:hidden;
+  pointer-events:none;
+  animation:var(--bird-flight-name) var(--bird-cycle) linear infinite;
+}
+.journey-bird-flock { position:absolute; left:0; top:0; width:var(--bird-flock-width); height:var(--bird-flock-height); pointer-events:none; }
+.journey-bird {
+  position:absolute;
+  width:var(--bird-size);
+  height:calc(var(--bird-size) * .5625);
+  color:#203149;
+  fill:currentColor;
+  opacity:var(--bird-opacity);
+  transform:scale(var(--bird-scale));
+  pointer-events:none;
+}
+.journey-bird-wing {
+  transform-box:view-box;
+  transform-origin:50% 55%;
+  animation-duration:var(--bird-wing-period);
+  animation-delay:var(--bird-wing-delay);
+  animation-timing-function:ease-in-out;
+  animation-direction:alternate;
+  animation-iteration-count:infinite;
+}
+.journey-bird-wing-left { animation-name:journey-bird-left-wing; }
+.journey-bird-wing-right { animation-name:journey-bird-right-wing; }
+@keyframes journey-bird-left-wing { from { transform:rotate(0) scaleY(1); } to { transform:rotate(-12deg) scaleY(.68); } }
+@keyframes journey-bird-right-wing { from { transform:rotate(0) scaleY(1); } to { transform:rotate(12deg) scaleY(.68); } }
+@media(max-width:1100px) {
+  .journey-bird-layer { --bird-size:16px; --bird-flock-width:110px; }
+  .journey-bird:nth-child(n+5) { display:none; }
+}
+@media(max-width:760px) {
+  .journey-bird-layer { --bird-size:14px; --bird-flock-width:90px; --bird-flock-height:40px; }
+  .journey-bird-flight[data-flight="flight-a"] { animation-name:journey-bird-mobile-flight-a; animation-duration:var(--bird-mobile-cycle); }
+  .journey-bird-flight[data-flight="flight-b"], .journey-bird:nth-child(n+4) { display:none; }
+}
+@media(prefers-reduced-motion:reduce) {
+  .journey-bird-layer { display:none; }
+  .journey-bird-flight,.journey-bird-wing { animation:none; }
+}

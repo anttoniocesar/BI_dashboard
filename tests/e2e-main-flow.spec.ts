@@ -1,0 +1,55 @@
+import { test, expect, login, logout, screenshot } from "./fixtures/e2e-test";
+import { createInitialWorkbook } from "../data/neural-network-demo";
+
+test("E2E MVP demo: Admin libera curso → aluno valida Lab → professor confere progresso", async ({ page }) => {
+  await page.goto("/login");
+  await login(page, "admin@example.com");
+  await page.getByRole("link", { name: "Usuários", exact: true }).click();
+  await page.getByRole("link", { name: "Ver detalhes de César", exact: true }).click();
+  await page.getByRole("button", { name: "Revogar curso Redes Neurais Aplicadas à Engenharia", exact: true }).click();
+  await expect(page.getByRole("status")).toContainText("revogada");
+  await page.getByRole("combobox", { name: "Vínculo de serviço", exact: true }).selectOption("service-cesar");
+  await page.getByRole("combobox", { name: "Curso para liberar", exact: true }).selectOption("neural-demo");
+  await page.getByRole("button", { name: "Liberar curso", exact: true }).click();
+  await expect(page.getByRole("status")).toContainText("liberado");
+  await logout(page); await login(page, "202700184");
+  await page.getByRole("link", { name: /Redes Neurais Aplicadas à Engenharia/ }).click();
+  await page.getByRole("link", { name: "Começar curso", exact: true }).click();
+  const active = page.locator(".chapter-activity-section.is-current");
+  await active.getByRole("button", { name: "Concluir atividade", exact: true }).click();
+  await page.getByRole("button", { name: "Abrir bloco B", exact: true }).click();
+  await expect(active).toContainText("Video Aplicação");
+  await page.getByRole("button", { name: "Abrir bloco D", exact: true }).click();
+  await active.getByRole("button", { name: "Concluir atividade", exact: true }).click();
+  await page.getByRole("link", { name: "Continuar para o próximo capítulo", exact: true }).click();
+  await expect(page).toHaveURL(/\/chapter\/correcao$/);
+  await page.getByRole("button", { name: "Abrir bloco D", exact: true }).click();
+  await active.getByRole("button", { name: "Concluir atividade", exact: true }).click();
+  await page.getByRole("button", { name: "Abrir bloco C.1", exact: true }).click();
+  await active.getByRole("button", { name: "Verificar respostas", exact: true }).click();
+  await expect(active.getByText("Aguardando aprovação do exercício.", { exact: true })).toBeVisible();
+  await active.getByRole("tab", { name: "Treinamento", exact: true }).click();
+  const solution = createInitialWorkbook().worksheets.find(sheet => sheet.id === "treinamento")!.cells;
+  for (let row = 2; row <= 6; row++) for (const column of ["F", "H", "I", "J"]) {
+    const address = `${column}${row}`;
+    await active.getByRole("gridcell", { name: address, exact: true }).click();
+    const bar = active.getByRole("textbox", { name: "Conteúdo da célula", exact: true });
+    await bar.fill(solution[address]); await bar.press("Enter");
+  }
+  await active.getByRole("button", { name: "Verificar respostas", exact: true }).click();
+  await expect(active.getByText("Atividade concluída ✓", { exact: true })).toBeVisible();
+  await expect(page.getByRole("progressbar", { name: "Progresso do curso", exact: true })).toHaveAttribute("value", "67");
+  await expect(active.getByText("Salvo ✓", { exact: true })).toBeVisible();
+  await screenshot(page, "main-lab");
+  await logout(page); await login(page, "professor@example.com");
+  await page.getByRole("link", { name: "Acompanhamento", exact: true }).click();
+  await page.getByRole("link", { name: "Redes Neurais Aplicadas à Engenharia", exact: true }).click();
+  await page.getByLabel("Buscar por nome ou matrícula", { exact: true }).fill("202700184");
+  await expect(page.locator("tbody tr")).toHaveCount(1);
+  await expect(page.locator("tbody tr")).toContainText("67%");
+  await expect(page.locator("tbody tr")).toContainText("4 de 6 obrigatórias");
+  await page.getByRole("link", { name: "César", exact: true }).click();
+  await expect(page.getByText("Progresso geral:")).toContainText("67%");
+  await expect(page.locator(".monitoring-card").filter({ hasText: "Capítulo 2" })).toContainText("Concluída");
+  await expect(page.locator(".spreadsheet-editor")).toHaveCount(0);
+});

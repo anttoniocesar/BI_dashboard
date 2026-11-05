@@ -1,0 +1,40 @@
+{
+  "name": "bi-society-lab",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "typecheck": "tsc --noEmit",
+    "test": "playwright test",
+    "test:smoke": "playwright test --grep @smoke",
+    "test:production-smoke": "playwright test --config=playwright.production.config.ts",
+    "test:e2e": "playwright test tests/e2e-main-flow.spec.ts tests/e2e-import-flow.spec.ts tests/e2e-navigation.spec.ts tests/e2e-permissions.spec.ts tests/course-authoring-ui.spec.ts tests/supabase-ui.spec.ts"
+  },
+  "engines": {
+    "node": ">=22.0.0"
+  },
+  "dependencies": {
+    "@supabase/ssr": "0.12.7",
+    "@supabase/supabase-js": "2.118.0",
+    "exceljs": "4.4.0",
+    "fast-formula-parser": "1.0.19",
+    "next": "16.4.2",
+    "react": "19.3.1",
+    "react-dom": "19.3.1",
+    "recharts": "3.10.1",
+    "saxes": "6.0.0",
+    "server-only": "0.0.1"
+  },
+  "devDependencies": {
+    "@electric-sql/pglite": "0.5.11",
+    "@playwright/test": "1.64.1",
+    "@tailwindcss/postcss": "4.3.3",
+    "@types/node": "26.6.5",
+    "@types/react": "19.3.0",
+    "@types/react-dom": "19.3.0",
+    "tailwindcss": "4.3.3",
+    "typescript": "7.0.2"
+  }
+}
